@@ -27,7 +27,7 @@ async function run() {
 
     // Extract the version number using the supplied strategy
     let version = core.getInput('root', { required: false })
-    version = version === null || version.trim().length === v0 ? null : version
+    version = version === null || version.trim().length === 0 ? null : version
 
     // If Regex strategy is specified, retrieve the Regex pattern
     const pattern = core.getInput('regex_pattern', { required: false })
