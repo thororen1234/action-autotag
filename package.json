@@ -14,7 +14,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "pnpx esbuild --bundle ./src/main.js --format=esm --platform=node --outdir=dist --external:octokit --external:@actions/core --external:semver"
+    "prepare": "pnpx esbuild --bundle ./src/main.js --format=esm --platform=node --outdir=dist"
   },
   "repository": {
     "type": "git",
