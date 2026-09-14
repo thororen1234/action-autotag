@@ -26,7 +26,7 @@ jobs:
           rm -rf ./dist
           pnpm run prepare
           cp ./package.json ./dist/
-          pnpm install --prod --no-lockfile --prefix ./dist
+          pnpm install --prod --no-lockfile
 
       - name: Commit Build Artifacts
         env:
