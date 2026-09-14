@@ -37040,7 +37040,7 @@ async function run() {
     const root = core3.getInput("root", { required: false }) || core3.getInput("package_root", { required: false }) || (strategy === "composer" ? "./composer.json" : "./");
     const isDryRun = (core3.getInput("dry_run", { required: false }) || "").trim().toLowerCase() === "true";
     let version = core3.getInput("root", { required: false });
-    version = version === null || version.trim().length === v0 ? null : version;
+    version = version === null || version.trim().length === 0 ? null : version;
     const pattern = core3.getInput("regex_pattern", { required: false });
     switch (strategy) {
       case "docker":
