@@ -28,6 +28,7 @@ jobs:
           cp ./package.json ./dist/
           cd ./dist
           pnpm install --prod --no-lockfile
+          cp -r ./node_modules ./dist/
 
       - name: Commit Build Artifacts
         env:
