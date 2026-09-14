@@ -1,6 +1,6 @@
 name: "Autotagger"
 description: "Automatically generate new tags for new versions. Supports several tagging strategies."
-author: "Butler Logic"
+author: "thororen1234"
 branding:
   icon: "tag"
   color: "blue"
@@ -8,11 +8,11 @@ inputs:
   root:
     description: Autotag will look for the appropriate file in in this location (relative to project root).
     required: false
-    default: './'
+    default: "./"
   strategy:
     description: Options include 'package' (for package.json), 'composer' (for composer.json), 'docker' (for Dockerfile), and 'regex' to extract from an arbitrary file. This does not need to be specified if the "regex_pattern" property is provided.
     required: false
-    default: 'package'
+    default: "package"
   tag_prefix:
     description: By default, package.json uses semantic versioning, such as "1.0.0". A prefix can be used to add text before the tag name. For example, if tag_prefx is set to "v", then the tag would be labeled as "v1.0.0".
     required: false
@@ -31,7 +31,7 @@ inputs:
   min_version:
     description: Minimum version required to create a tag. By default it will prevent a version `0.0.0` from being tagged. Also useful when introducing Autotag to an existing repo, to start auto-tagging from a specific version
     required: false
-    default: '0.0.1'
+    default: "0.0.1"
   regex_pattern:
     description: An optional attribute containing the regular expression used to extract the version number.
     required: false

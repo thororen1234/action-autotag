@@ -1,15 +1,14 @@
 import core from '@actions/core'
-import os from 'os'
 import { Octokit } from 'octokit'
 
 // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
 const github = (new Octokit({ auth: process.env.GITHUB_TOKEN || process.env.INPUT_GITHUB_TOKEN })).rest
 
 // Get owner and repo from context of payload that triggered the action
-const [ owner, repo ] = process.env.GITHUB_ACTION_REPOSITORY.split('/')
+const [owner, repo] = process.env.GITHUB_ACTION_REPOSITORY.split('/')
 
 export default class Tag {
-  constructor (prefix, version, postfix) {
+  constructor(prefix, version, postfix) {
     this.prefix = prefix
     this.version = version
     this.postfix = postfix
@@ -21,11 +20,11 @@ export default class Tag {
     this._ref = ''
   }
 
-  get name () {
+  get name() {
     return `${this.prefix.trim()}${this.version.trim()}${this.postfix.trim()}`
   }
 
-  set message (value) {
+  set message(value) {
     if (value && value.length > 0) {
       this._message = value
     }
@@ -35,27 +34,27 @@ export default class Tag {
     return this._message || ''
   }
 
-  get sha () {
+  get sha() {
     return this._sha || ''
   }
 
-  get uri () {
+  get uri() {
     return this._uri || ''
   }
 
-  get ref () {
+  get ref() {
     return this._ref || ''
   }
 
-  get prerelease () {
+  get prerelease() {
     return /([0-9\.]{5}(-[\w\.0-9]+)?)/i.test(this.version)
   }
 
-  get build () {
+  get build() {
     return /([0-9\.]{5}(\+[\w\.0-9]+)?)/i.test(this.version)
   }
 
-  async getMessage () {
+  async getMessage() {
     if (this._message !== null) {
       return this._message
     }
@@ -82,23 +81,22 @@ export default class Tag {
                 .replace(/\{\{\s?(sha)\s?\}\}/gi, commit.sha)
                 .trim() + '\n'
             } else {
-              return `${i === 0 ? '\n' : ''}${i + 1}) ${commit.commit.message}${
-                commit.hasOwnProperty('author')
-                  ? commit.author.hasOwnProperty('login')
-                    ? ' (' + commit.author.login + ')'
-                    : ''
+              return `${i === 0 ? '\n' : ''}${i + 1}) ${commit.commit.message}${commit.hasOwnProperty('author')
+                ? commit.author.hasOwnProperty('login')
+                  ? ' (' + commit.author.login + ')'
                   : ''
-              }\n(SHA: ${commit.sha})\n`
+                : ''
+                }\n(SHA: ${commit.sha})\n`
             }
           })
         .join('\n')
     } catch (e) {
-      core.warning('Failed to generate changelog from commits: ' + e.message + os.EOL)
+      core.warning('Failed to generate changelog from commits: ' + e.message + '\n')
       return `Version ${this.version}`
     }
   }
 
-  async getTags () {
+  async getTags() {
     if (this._tags !== null) {
       return this._tags.data
     }
@@ -108,7 +106,7 @@ export default class Tag {
     return this._tags.data
   }
 
-  async exists () {
+  async exists() {
     if (this._exists !== null) {
       return this._exists
     }
@@ -126,7 +124,7 @@ export default class Tag {
     return false
   }
 
-  async push () {
+  async push() {
     let tagexists = await this.exists()
 
     if (!tagexists) {
@@ -169,7 +167,7 @@ export default class Tag {
       this._ref = newReference.data.ref
       this._message = message;
 
-      core.warning(`Reference ${newReference.data.ref} available at ${newReference.data.url}` + os.EOL)
+      core.warning(`Reference ${newReference.data.ref} available at ${newReference.data.url}\n`)
     } else {
       core.warning('Cannot push tag (it already exists).')
     }

@@ -1,5 +1,4 @@
 import * as core from '@actions/core'
-import os from 'os'
 import semver from 'semver'
 import Setup from './lib/setup.js'
 import Package from './lib/package.js'
@@ -7,7 +6,7 @@ import Tag from './lib/tag.js'
 import Regex from './lib/regex.js'
 import Dockerfile from './lib/docker.js'
 
-async function run () {
+async function run() {
   try {
     Setup.debug()
     Setup.requireAnyEnv('GITHUB_TOKEN', 'INPUT_GITHUB_TOKEN')
@@ -73,7 +72,7 @@ async function run () {
       core.info(`Skipping min version check. ${minVersion} is not valid SemVer`)
     }
 
-    if(!versionSemVer) {
+    if (!versionSemVer) {
       core.info(`Skipping min version check. ${version} is not valid SemVer`)
     }
 
@@ -105,7 +104,7 @@ async function run () {
 
     // Check for existance of tag and abort (short circuit) if it already exists.
     if (await tag.exists()) {
-      core.setFailed(`"${tag.name}" tag already exists.` + os.EOL)
+      core.setFailed(`"${tag.name}" tag already exists.\n`)
       core.setOutput('tagname', '')
       return
     }

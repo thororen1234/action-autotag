@@ -22,6 +22,7 @@ There are several "detection strategies" to choose from:
 When a new version is detected, it is compared to the current tags in the Github repository. If the version is newer than other tags (or if no tags exist yet), the version will be used to create a new tag.
 
 ### Tagging: Part of a Complete Deployment Solution
+
 This action works well in combination with:
 
 - [actions/create-release](https://github.com/actions/create-release) (Auto-release)
@@ -45,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: butlerlogic/action-autotag@stable
+    - uses: thororen1234/action-autotag@stable
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
@@ -56,7 +57,7 @@ This **order** is important!
 
 ```yaml
 - uses: actions/checkout@v2
-- uses: butlerlogic/action-autotag@stable
+- uses: thororen1234/action-autotag@stable
 ```
 
 **If the repository is not checked out first, the autotagger cannot find the source files.**
@@ -66,7 +67,7 @@ This **order** is important!
 The `GITHUB_TOKEN` **must** be provided. Without this, it is not possible to create a new tag. Make sure the autotag action looks like the following example:
 
 ```yaml
-- uses: butlerlogic/action-autotag@stable
+- uses: thororen1234/action-autotag@stable
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
@@ -82,7 +83,7 @@ There are several options to customize how the tag is created.
 This is the strategy used to identify the version number/tag from within the code base.
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   with:
@@ -103,7 +104,7 @@ Depending on the selected strategy, autotagger will look for the confgured ident
 _Using the **package** (or composer) strategy:_
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   with:
@@ -116,7 +117,7 @@ The version number would be extracted from `/path/to/subdirectory/package.json`.
 _Using the **docker** strategy:_
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   with:
@@ -129,7 +130,7 @@ The version number would be extracted from `/path/to/subdirectory/Dockerfile`, s
 _Using the **regex** strategy:_
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   with:
@@ -145,7 +146,7 @@ The version will be extracted by scanning the content of `/path/to/subdirectory/
 An optional attribute containing the regular expression used to extract the version number.
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   with:
@@ -163,7 +164,7 @@ The pattern described in this example is a simplistic one. If you need a more ex
 As of `1.1.2`, JavaScript named patterns are supported, where the group named `version` will be used to populate the tag. For example:
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   with:
@@ -175,7 +176,7 @@ As of `1.1.2`, JavaScript named patterns are supported, where the group named `v
 By default, [semantic versioning](https://semver.org/) is used, such as `1.0.0`. A prefix can be used to add text before the tag name. For example, if `tag_prefix` is set to `v`, then the tag would be labeled as `v1.0.0`.
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   with:
@@ -184,10 +185,10 @@ By default, [semantic versioning](https://semver.org/) is used, such as `1.0.0`.
 
 ### tag_suffix
 
-Text can be applied to the end of the tag by setting `tag_suffix`. For example, if `tag_suffix` is ` (beta)`, the tag would be `1.0.0 (beta)`. Please note this example violates semantic versioning and is merely here to illustrate how to add text to the end of a tag name if you _really_ want to.
+Text can be applied to the end of the tag by setting `tag_suffix`. For example, if `tag_suffix` is `(beta)`, the tag would be `1.0.0 (beta)`. Please note this example violates semantic versioning and is merely here to illustrate how to add text to the end of a tag name if you _really_ want to.
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   with:
@@ -199,7 +200,7 @@ Text can be applied to the end of the tag by setting `tag_suffix`. For example, 
 This is the annotated commit message associated with the tag. By default, a changelog will be generated from the commits between the latest tag and the current reference (HEAD). Setting this option will override the message.
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   with:
@@ -211,7 +212,7 @@ This is the annotated commit message associated with the tag. By default, a chan
 By default, a changelog is generated, containing the commit messages since the last release. The message is generated by applying a commit message template to each commit's data attributes.
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   with:
@@ -244,7 +245,7 @@ Explicitly set the version instead of using automatic detection (forces "manual"
 Useful for projects where the version number may be output by a previous action.
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   env:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
   with:
@@ -260,7 +261,7 @@ The default value (`0.0.1`) prevents a `0.0.0` from being created. This can also
 For example, if the version `0.1.0` is already published, set the `minVersion` to the next patch to prevent a duplicate tag for that version.
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     min_version: "0.1.1"
@@ -272,12 +273,11 @@ If this value is `true`, the tag will not be pushed.
 You can check for duplicate versions when creating a pull request.
 
 ```yaml
-- uses: butlerlogic/action-autotag@1.0.0
+- uses: thororen1234/action-autotag@1.0.0
   with:
     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     dry_run: true
 ```
-
 
 ## Developer Notes
 
@@ -312,7 +312,7 @@ These sponsors are helping make this project possible.
   </tr>
 </table>
 
-# Our Ask...
+# Our Ask
 
 If you use this or find value in it, please consider contributing in one or more of the following ways:
 
